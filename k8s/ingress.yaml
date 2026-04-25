@@ -1,0 +1,30 @@
+﻿apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: documenthub-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /files
+        pathType: Prefix
+        backend:
+          service:
+            name: file-service
+            port:
+              number: 5001
+      - path: /projects
+        pathType: Prefix
+        backend:
+          service:
+            name: project-service
+            port:
+              number: 5002
+      - path: /logs
+        pathType: Prefix
+        backend:
+          service:
+            name: audit-service
+            port:
+              number: 5003
