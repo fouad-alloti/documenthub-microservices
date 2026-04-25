@@ -250,7 +250,7 @@ main
 └── feature/add-security-rbac           (PR #4 mergée)
 ```
 
-Convention des commits : [Conventional Commits](https://www.conventionalcommits.org/)
+
 
 ---
 
