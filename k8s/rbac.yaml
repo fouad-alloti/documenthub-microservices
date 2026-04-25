@@ -1,0 +1,115 @@
+﻿# ============================================
+# RBAC - Role Based Access Control
+# DocumentHub Microservices
+# ============================================
+
+# 1. ServiceAccount pour file-service
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: file-service-sa
+  namespace: default
+---
+# 2. ServiceAccount pour project-service
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: project-service-sa
+  namespace: default
+---
+# 3. ServiceAccount pour audit-service
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: audit-service-sa
+  namespace: default
+---
+# 4. Role pour file-service (peut lire les pods et services)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: file-service-role
+  namespace: default
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "endpoints"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list"]
+---
+# 5. Role pour project-service
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: project-service-role
+  namespace: default
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "endpoints"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list"]
+---
+# 6. Role pour audit-service (accès étendu pour la traçabilité)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: audit-service-role
+  namespace: default
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "endpoints", "events"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "watch"]
+---
+# 7. RoleBinding file-service
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: file-service-rolebinding
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  name: file-service-sa
+  namespace: default
+roleRef:
+  kind: Role
+  apiRef: file-service-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# 8. RoleBinding project-service
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: project-service-rolebinding
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  name: project-service-sa
+  namespace: default
+roleRef:
+  kind: Role
+  name: project-service-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# 9. RoleBinding audit-service
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: audit-service-rolebinding
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  name: audit-service-sa
+  namespace: default
+roleRef:
+  kind: Role
+  name: audit-service-role
+  apiGroup: rbac.authorization.k8s.io
