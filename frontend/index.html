@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocumentHub - Plateforme de partage documentaire</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="logo">📄 DocumentHub</h1>
+            <ul class="nav-links">
+                <li><a href="#files">Fichiers</a></li>
+                <li><a href="#projects">Projets</a></li>
+                <li><a href="#audit">Audit</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Section Fichiers -->
+        <section id="files" class="section">
+            <div class="section-header">
+                <h2>📁 Gestion des fichiers</h2>
+                <p>Uploadez et gérez vos fichiers de projet</p>
+            </div>
+
+            <div class="card">
+                <h3>Upload un fichier</h3>
+                <div class="form-group">
+                    <input type="file" id="fileInput" placeholder="Choisir un fichier">
+                    <button onclick="uploadFile()" class="btn btn-primary">Uploader</button>
+                </div>
+                <div id="uploadStatus" class="status"></div>
+            </div>
+
+            <div class="card">
+                <h3>Fichiers listés</h3>
+                <div id="filesList" class="list">
+                    <p class="loading">Chargement...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Projets -->
+        <section id="projects" class="section">
+            <div class="section-header">
+                <h2>👥 Gestion des projets</h2>
+                <p>Créez et gérez vos projets collaboratifs</p>
+            </div>
+
+            <div class="card">
+                <h3>Créer un projet</h3>
+                <form onsubmit="createProject(event)" class="form">
+                    <div class="form-group">
+                        <input type="text" id="projectName" placeholder="Nom du projet" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="projectDesc" placeholder="Description du projet"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="projectOwner" placeholder="Propriétaire" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Créer</button>
+                </form>
+                <div id="projectStatus" class="status"></div>
+            </div>
+
+            <div class="card">
+                <h3>Projets listés</h3>
+                <div id="projectsList" class="list">
+                    <p class="loading">Chargement...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Audit -->
+        <section id="audit" class="section">
+            <div class="section-header">
+                <h2>📊 Logs d'audit</h2>
+                <p>Traçabilité des actions effectuées</p>
+            </div>
+
+            <div class="card">
+                <h3>Ajouter un log</h3>
+                <form onsubmit="addLog(event)" class="form">
+                    <div class="form-group">
+                        <input type="text" id="logAction" placeholder="Action" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="logUser" placeholder="Utilisateur" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="logService" placeholder="Service" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="logDetails" placeholder="Détails"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </form>
+                <div id="auditStatus" class="status"></div>
+            </div>
+
+            <div class="card">
+                <h3>Logs récents</h3>
+                <div id="logsList" class="list">
+                    <p class="loading">Chargement...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Status -->
+        <section id="status" class="section">
+            <div class="section-header">
+                <h2>🟢 Status des services</h2>
+            </div>
+            <div id="servicesStatus" class="grid">
+                <div class="status-card">
+                    <h4>File Service</h4>
+                    <p id="fileServiceStatus" class="status-text">Vérification...</p>
+                </div>
+                <div class="status-card">
+                    <h4>Project Service</h4>
+                    <p id="projectServiceStatus" class="status-text">Vérification...</p>
+                </div>
+                <div class="status-card">
+                    <h4>Audit Service</h4>
+                    <p id="auditServiceStatus" class="status-text">Vérification...</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 DocumentHub - Plateforme microservices | Fouad ALLOTI</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
