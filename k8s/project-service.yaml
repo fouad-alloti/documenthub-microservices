@@ -12,6 +12,7 @@ spec:
       labels:
         app: project-service
     spec:
+      serviceAccountName: project-service-sa
       containers:
       - name: project-service
         image: project-service:latest

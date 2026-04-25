@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+﻿apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: file-service
@@ -12,6 +12,7 @@ spec:
       labels:
         app: file-service
     spec:
+      serviceAccountName: file-service-sa
       containers:
       - name: file-service
         image: file-service:latest

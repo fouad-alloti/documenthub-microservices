@@ -12,6 +12,7 @@ spec:
       labels:
         app: audit-service
     spec:
+      serviceAccountName: audit-service-sa
       containers:
       - name: audit-service
         image: audit-service:latest
